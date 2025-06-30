@@ -1,65 +1,143 @@
-import { StyleSheet, Text, View, StatusBar } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  ScrollView,
+  Image,
+} from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 export default function App() {
-  // const images = [
-  //   "image1":"./assets/image1.png",
-  //   "image2",
-  //   "image3",
-  //   "image4",
-  //   "image5",
-  //   "image6",
-  //   "image7",
-  //   "image8",
-  // ]
   const users = [
     {
       id: 1,
       name: "Aron",
       image: "https://i.pravatar.cc/150?img=1",
       message: "Hello user 1",
+      date: "11:59 AM",
+      check: "check",
     },
     {
       id: 2,
       name: "Abelson",
       image: "https://i.pravatar.cc/150?img=2",
       message: "Hello user 2",
+      date: "7:33 AM",
+      check: "check-double",
     },
     {
       id: 3,
       name: "Cathor",
       image: "https://i.pravatar.cc/150?img=3",
       message: "Hello user 3",
+      date: "5:59 PM",
+      check: "check",
     },
     {
       id: 4,
       name: "Steven",
       image: "https://i.pravatar.cc/150?img=4",
       message: "Hello user 4",
+      date: "3:00 PM",
+      check: "check-double",
     },
     {
       id: 5,
       name: "Franklin",
       image: "https://i.pravatar.cc/150?img=5",
       message: "Hello user 5",
+      date: "2:15 AM",
+      check: "check",
     },
     {
       id: 6,
       name: "Henry Ward",
       image: "https://i.pravatar.cc/150?img=6",
       message: "Hello user 6",
+      date: "3:49 PM",
+      check: "check-double",
     },
     {
       id: 7,
       name: "Jacob Jones",
       image: "https://i.pravatar.cc/150?img=7",
       message: "Hello user 7",
+      date: "10:10 AM",
+      check: "check",
     },
     {
       id: 8,
       name: "Lilly",
       image: "https://i.pravatar.cc/150?img=8",
       message: "Hello user 8",
+      date: "12:30 AM",
+      check: "check-double",
+    },
+    {
+      id: 9,
+      name: "Aron",
+      image: "https://i.pravatar.cc/150?img=1",
+      message: "Hello user 9",
+      date: "11:59 AM",
+      check: "check",
+    },
+    {
+      id: 10,
+      name: "Abelson",
+      image: "https://i.pravatar.cc/150?img=2",
+      message: "Hello user 10",
+      date: "7:33 AM",
+      check: "check-double",
+    },
+    {
+      id: 11,
+      name: "Cathor",
+      image: "https://i.pravatar.cc/150?img=3",
+      message: "Hello user 11",
+      date: "5:59 PM",
+      check: "check",
+    },
+    {
+      id: 12,
+      name: "Steven",
+      image: "https://i.pravatar.cc/150?img=4",
+      message: "Hello user 12",
+      date: "3:00 PM",
+      check: "check-double",
+    },
+    {
+      id: 13,
+      name: "Franklin",
+      image: "https://i.pravatar.cc/150?img=5",
+      message: "Hello user 13",
+      date: "2:15 AM",
+      check: "check",
+    },
+    {
+      id: 14,
+      name: "Henry Ward",
+      image: "https://i.pravatar.cc/150?img=6",
+      message: "Hello user 14",
+      date: "3:49 PM",
+      check: "check-double",
+    },
+    {
+      id: 15,
+      name: "Jacob Jones",
+      image: "https://i.pravatar.cc/150?img=7",
+      message: "Hello user 15",
+      date: "10:10 AM",
+      check: "check",
+    },
+    {
+      id: 16,
+      name: "Lilly",
+      image: "https://i.pravatar.cc/150?img=8",
+      message: "Hello user 16",
+      date: "12:30 AM",
+      check: "check-double",
     },
   ];
   return (
@@ -144,7 +222,59 @@ export default function App() {
           </View>
         </View>
       </View>
-      <ScrollView>{users.map}</ScrollView>
+      <ScrollView>
+        {users.map((user) => (
+          <View
+            key={user.id}
+            style={{
+              flexDirection: "row",
+              gap: 10,
+              padding: 10,
+              justifyContent: "space-between",
+              width: "100%",
+              borderBottomWidth: 1,
+              borderBottomColor: "lightgrey",
+            }}
+          >
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 50,
+                overflow: "hidden",
+              }}
+            >
+              <Image
+                source={{ uri: user.image }}
+                style={{ width: 50, height: 50 }}
+              />
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                flex: 1,
+              }}
+            >
+              <View style={{ flexDirection: "column" }}>
+                <Text style={{ fontWeight: "700" }}>{user.name}</Text>
+                <View style={{ flexDirection: "row", gap: 10 }}>
+                  <FontAwesome5
+                    name={user.check}
+                    size={14}
+                    color="#2a6aca"
+                    paddingTop={5}
+                  />
+                  <Text style={{ color: "grey" }}>{user.message}</Text>
+                </View>
+              </View>
+              <View>
+                <Text style={{ color: "#555555" }}>{user.date}</Text>
+              </View>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -156,12 +286,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   appbar: {
-    paddingTop: 50,
+    paddingTop: 20,
     backgroundColor: "#008069",
     width: "100%",
   },
   navbar: {
-    paddingTop: 30,
+    paddingTop: 20,
     backgroundColor: "#008069",
     width: "100%",
     paddingBottom: 10,

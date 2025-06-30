@@ -3,7 +3,7 @@
 React Native Task that demonstrates WhatsApp UI.
 
 ## Demo
-[Demo Video](https://drive.google.com/drive/folders/1cduhnD-fDtUp9ygUJsRZS52zp2UJChPB)
+[Demo Video](https://drive.google.com/file/d/1Fnibd_JN1Bs7L7l1SdAoTjpwFYnc22hc/view?usp=sharing)
 
 ## Installation
 ```bash

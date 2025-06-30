@@ -5,10 +5,14 @@ import {
   StatusBar,
   ScrollView,
   Image,
+  TextInput,
+  Pressable,
+  Alert,
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import { useState } from "react";
 export default function App() {
   const users = [
     {
@@ -140,6 +144,15 @@ export default function App() {
       check: "check-double",
     },
   ];
+  const [searchText, setSearchText] = useState("");
+  const [userList, setUserList] = useState(users);
+  const handleDelete = (id) => {
+    setUserList((prev) => prev.filter((u) => u.id !== id));
+  };
+
+  const filteredUsers = userList.filter((user) =>
+    user.name.toLowerCase().includes(searchText.toLowerCase())
+  );
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#008069" barStyle="light-content" />
@@ -150,17 +163,33 @@ export default function App() {
             paddingInline: 20,
             flexDirection: "row",
             justifyContent: "space-between",
+            alignItems: "center",
+            gap: 90,
           }}
         >
           <Text style={{ color: "white", fontSize: 20, fontWeight: "700" }}>
             WhatApp
           </Text>
-          <View style={{ flexDirection: "row" }}>
-            <AntDesign
-              name="search1"
-              size={30}
-              color="white"
-              paddingRight={10}
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <TextInput
+              placeholder="Search"
+              placeholderTextColor="grey"
+              value={searchText}
+              onChangeText={setSearchText}
+              style={{
+                fontSize: 14,
+                width: "60%",
+                borderColor: "grey",
+                borderWidth: 1,
+                borderRadius: 8,
+                height: 40,
+                backgroundColor: "white",
+              }}
             />
             <Entypo name="dots-three-vertical" size={30} color="white" />
           </View>
@@ -223,56 +252,75 @@ export default function App() {
         </View>
       </View>
       <ScrollView>
-        {users.map((user) => (
-          <View
+        {filteredUsers.map((user) => (
+          <Pressable
             key={user.id}
-            style={{
-              flexDirection: "row",
-              gap: 10,
-              padding: 10,
-              justifyContent: "space-between",
-              width: "100%",
-              borderBottomWidth: 1,
-              borderBottomColor: "lightgrey",
-            }}
+            onLongPress={() =>
+              Alert.alert(
+                `Delete ${user.name}?`,
+                `Are you sure you want to delete ${user.name}?`,
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                  },
+                  {
+                    text: "Delete",
+                    onPress: () => handleDelete(user.id),
+                  },
+                ]
+              )
+            }
           >
             <View
               style={{
-                width: 50,
-                height: 50,
-                borderRadius: 50,
-                overflow: "hidden",
-              }}
-            >
-              <Image
-                source={{ uri: user.image }}
-                style={{ width: 50, height: 50 }}
-              />
-            </View>
-            <View
-              style={{
                 flexDirection: "row",
+                gap: 10,
+                padding: 10,
                 justifyContent: "space-between",
-                flex: 1,
+                width: "100%",
+                borderBottomWidth: 1,
+                borderBottomColor: "lightgrey",
               }}
             >
-              <View style={{ flexDirection: "column" }}>
-                <Text style={{ fontWeight: "700" }}>{user.name}</Text>
-                <View style={{ flexDirection: "row", gap: 10 }}>
-                  <FontAwesome5
-                    name={user.check}
-                    size={14}
-                    color="#2a6aca"
-                    paddingTop={5}
-                  />
-                  <Text style={{ color: "grey" }}>{user.message}</Text>
+              <View
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 50,
+                  overflow: "hidden",
+                }}
+              >
+                <Image
+                  source={{ uri: user.image }}
+                  style={{ width: 50, height: 50 }}
+                />
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  flex: 1,
+                }}
+              >
+                <View style={{ flexDirection: "column" }}>
+                  <Text style={{ fontWeight: "700" }}>{user.name}</Text>
+                  <View style={{ flexDirection: "row", gap: 10 }}>
+                    <FontAwesome5
+                      name={user.check}
+                      size={14}
+                      color="#2a6aca"
+                      paddingTop={5}
+                    />
+                    <Text style={{ color: "grey" }}>{user.message}</Text>
+                  </View>
+                </View>
+                <View>
+                  <Text style={{ color: "#555555" }}>{user.date}</Text>
                 </View>
               </View>
-              <View>
-                <Text style={{ color: "#555555" }}>{user.date}</Text>
-              </View>
             </View>
-          </View>
+          </Pressable>
         ))}
       </ScrollView>
     </View>
@@ -286,7 +334,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   appbar: {
-    paddingTop: 20,
+    paddingTop: 10,
     backgroundColor: "#008069",
     width: "100%",
   },
